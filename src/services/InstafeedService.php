@@ -35,14 +35,13 @@ class InstafeedService extends Component
     // Public Methods
     // =========================================================================
 
-    public function dumpToken(String $handle)
+    public function dumpToken(String $handle, \craft\models\Site $model=null)
     {
-      $site = $this->_getSite($handle);
+      $site = ($model) ? $model : $this->_getSite($handle);
       if ($site){
         $token = $this->_getAccessToken($site->id);
         if (!empty($token)){
-          echo $token."\n";
-          return true;
+          return $token."\n";
         }
       }
       return false;
@@ -66,8 +65,7 @@ class InstafeedService extends Component
             $exp_date = DateTimeHelper::toDateTime($results['expires'])->format('F d, Y \a\t H:i:s A.');
             $target = DateTimeHelper::toDateTime($results['expires']);
             $interval = (new DateTime())->diff($target)->format('%a day(s)');
-            echo 'Expires in ',$interval,' on ',$exp_date,"\n";
-            return true;
+            return 'Expires in '.$interval.' on '.$exp_date."\n";
           } catch (Exception $e) {
             return false;
           }
@@ -75,9 +73,9 @@ class InstafeedService extends Component
       }
     }
     
-    public function removeToken(String $handle)
+    public function removeToken(String $handle, \craft\models\Site $model=null)
     {
-      $site = $this->_getSite($handle);
+      $site = ($model) ? $model : $this->_getSite($handle);
       if ($site){
         $this->_remove($site->id);
         return true;
@@ -85,9 +83,9 @@ class InstafeedService extends Component
       return false;
     }
 
-    public function refreshToken(String $handle)
+    public function refreshToken(String $handle, \craft\models\Site $model=null)
     {
-      $site = $this->_getSite($handle);
+      $site = ($model) ? $model : $this->_getSite($handle);
       if ($site){
         $result = (new Query())
           ->select(['id','access_token'])
@@ -107,8 +105,7 @@ class InstafeedService extends Component
               $exp_date = DateTimeHelper::toDateTime($results['expires'])->format('F d, Y \a\t H:i:s A.');
               $target = DateTimeHelper::toDateTime($results['expires']);
               $interval = (new DateTime())->diff($target)->format('%a day(s)');
-              echo 'Expires in ',$interval,' on ',$exp_date,"\n";
-              return true;
+              return 'Expires in '.$interval.' on '.$exp_date."\n";
             } catch (Exception $e) {
               return false;
             }
@@ -123,17 +120,16 @@ class InstafeedService extends Component
       return false;
     }
 
-    public function getTokenExpiration(String $handle)
+    public function getTokenExpiration(String $handle, \craft\models\Site $model=null)
     {
-      $site = $this->_getSite($handle);
+      $site = ($model) ? $model : $this->_getSite($handle);
       if ($site){
         $tokenage = $this->_getAccessTokenAge($site->id);
         if (!empty($tokenage)){
           $exp_date = DateTimeHelper::toDateTime($tokenage)->format('F d, Y \a\t H:i:s A.');
           $target = DateTimeHelper::toDateTime($tokenage);
           $interval = (new DateTime())->diff($target)->format('%a day(s)');
-          echo 'Expires in ',$interval,' on ',$exp_date,"\n";
-          return true;
+          return 'Expires in '.$interval.' on '.$exp_date."\n";
         }
       }
       return false;

@@ -1,6 +1,6 @@
 # Instafeed plugin for Craft CMS 3.x
 
-Instagram feed for CraftCMS supporting multi-site configurations and GraphQL.
+Instagram feed for CraftCMS supporting multi-site configurations.
 
 ![Screenshot](resources/instafeed.png)
 

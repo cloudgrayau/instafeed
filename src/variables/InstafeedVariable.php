@@ -14,11 +14,11 @@ use cloudgrayau\instafeed\Instafeed;
 
 class InstafeedVariable {
   
-    public function getUser($site='') {
-      return Instafeed::$plugin->instafeedService->getUser((string)$site);
+    public function getUser(String $site='') {
+      return Instafeed::$plugin->instafeedService->getUser($site);
     }
-    public function getFeed($limit=10, $site='') {
-      return Instafeed::$plugin->instafeedService->getFeed(((int)$limit > 0) ? (int)$limit : 10, (string)$site);
+    public function getFeed($limit=10, String $site='') {
+      return Instafeed::$plugin->instafeedService->getFeed(((int)$limit > 0) ? (int)$limit : 10, $site);
     }
     
 }

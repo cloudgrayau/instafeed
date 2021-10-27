@@ -69,7 +69,7 @@ class Instafeed extends Plugin
         self::$plugin = $this;
         
         if (Craft::$app instanceof ConsoleApplication) {
-            $this->controllerNamespace = 'cloudgrayau\instafeed\console';
+          $this->controllerNamespace = 'cloudgrayau\instafeed\console';
         }
         
         Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function (Event $event) {
