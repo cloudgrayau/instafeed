@@ -1,0 +1,46 @@
+{
+    "name": "cloudgrayau/instafeed",
+    "description": "Instagram feed for CraftCMS supporting multi-site configurations",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "instagram",
+        "instagram feed",
+        "instafeed"
+    ],
+    "support": {
+        "docs": "https://github.com/cloudgrayau/instafeed/blob/main/README.md",
+        "issues": "https://github.com/cloudgrayau/instafeed/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cloud Gray Pty Ltd",
+            "homepage": "https://cloudgray.com.au/"
+        }
+    ],
+    "require": {
+      "craftcms/cms": "^3.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+          "cloudgrayau\\instafeed\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Instafeed",
+        "handle": "instafeed",
+        "developer": "Cloud Gray Pty Ltd",
+        "developerUrl": "https://cloudgray.com.au/",
+        "documentationUrl": "https://github.com/cloudgrayau/instafeed/blob/main/README.md",
+        "changelogUrl": "https://raw.githubusercontent.com/cloudgrayau/instafeed/main/CHANGELOG.md",
+        "components": {
+            "instafeedService": "cloudgrayau\\instafeed\\services\\InstafeedService"
+        },
+        "class": "cloudgrayau\\instafeed\\Instafeed"
+    }
+}

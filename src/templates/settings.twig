@@ -1,0 +1,11 @@
+{% import "_includes/forms" as forms %}
+<div id="settings">
+{{ forms.textField({
+    label: "Cache duration",
+    instructions: "The total amount of seconds to cache Instagram API requests.",
+    name: 'cache_duration',
+    value: settings['cache_duration'],
+    required: true,
+    type: 'number',
+    min: 0,
+}) }}
