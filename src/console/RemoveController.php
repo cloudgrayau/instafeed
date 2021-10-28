@@ -21,7 +21,11 @@ class RemoveController extends Controller
     // =========================================================================
 
     public function actionIndex(String $handle='') {
-      echo Instafeed::$plugin->instafeedService->removeToken($handle);
+      if (empty($handle)){
+        echo Instafeed::$plugin->instafeedService->removeToken('', \Craft::$app->getSites()->primarySite);
+      } else {
+        echo Instafeed::$plugin->instafeedService->removeToken($handle);
+      }
     }
     
     public function actionAll() {

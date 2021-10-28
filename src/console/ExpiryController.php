@@ -21,7 +21,11 @@ class ExpiryController extends Controller
     // =========================================================================
 
     public function actionIndex(String $handle='') {
-      echo Instafeed::$plugin->instafeedService->getTokenExpiration($handle);
+      if (empty($handle)){
+        echo Instafeed::$plugin->instafeedService->getTokenExpiration('', \Craft::$app->getSites()->primarySite);
+      } else {
+        echo Instafeed::$plugin->instafeedService->getTokenExpiration($handle);
+      }
     }
     
     public function actionAll() {

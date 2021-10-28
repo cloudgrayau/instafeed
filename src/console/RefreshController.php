@@ -21,7 +21,11 @@ class RefreshController extends Controller
     // =========================================================================
 
     public function actionIndex(String $handle='') {
-      $result = Instafeed::$plugin->instafeedService->refreshToken($handle);
+      if (empty($handle)){
+        $result = Instafeed::$plugin->instafeedService->refreshToken('', \Craft::$app->getSites()->primarySite);
+      } else {
+        $result = Instafeed::$plugin->instafeedService->refreshToken($handle);
+      }
       if ($result){
         echo $result;
         return true;

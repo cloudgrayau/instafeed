@@ -47,9 +47,9 @@ class InstafeedService extends Component
       return false;
     }
 
-    public function insertToken(String $token, String $handle)
+    public function insertToken(String $token, String $handle, \craft\models\Site $model=null)
     {
-      $site = $this->_getSite($handle);
+      $site = ($model) ? $model : $this->_getSite($handle);
       if ((!empty($token)) && ($site)){
         $this->_remove($site->id);
         $results = $this->_refresh($token);
@@ -159,7 +159,7 @@ class InstafeedService extends Component
             } catch (GuzzleException $e) {
               return $e->getMessage();
             }
-          }, $settings_['cache_duration']);
+          }, $settings_['cacheDuration']);
         }
       }
       return;
@@ -190,7 +190,7 @@ class InstafeedService extends Component
             } catch (GuzzleException $e) {
               return $e->getMessage();
             }
-          }, $settings_['cache_duration']);
+          }, $settings_['cacheDuration']);
         }
       }
       return;
@@ -203,7 +203,7 @@ class InstafeedService extends Component
       if (!empty($handle)){
         $site = Craft::$app->getSites()->getSiteByHandle($handle);
       } else {
-        $site = Craft::$app->getSites()->primarySite;
+        $site = Craft::$app->getSites()->currentSite;
       }
       return $site;
     }

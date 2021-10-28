@@ -21,7 +21,11 @@ class GetController extends Controller
     // =========================================================================
 
     public function actionIndex(String $handle='') {
-      echo Instafeed::$plugin->instafeedService->dumpToken($handle);
+      if (empty($handle)){
+        echo Instafeed::$plugin->instafeedService->dumpToken('', \Craft::$app->getSites()->primarySite);
+      } else {
+        echo Instafeed::$plugin->instafeedService->dumpToken($handle);
+      }
     }
     
     public function actionAll() {

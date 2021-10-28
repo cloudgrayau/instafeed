@@ -21,7 +21,11 @@ class InsertController extends Controller
     // =========================================================================
 
     public function actionIndex(String $token='', String $handle='') {
-      Instafeed::$plugin->instafeedService->insertToken($token, $handle);
+      if (empty($handle)){
+        Instafeed::$plugin->instafeedService->insertToken($token, '', \Craft::$app->getSites()->primarySite);
+      } else {
+        Instafeed::$plugin->instafeedService->insertToken($token, $handle);
+      }
     }
     
 }
