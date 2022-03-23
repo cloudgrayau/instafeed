@@ -1,6 +1,6 @@
 <?php
 /**
- * Instafeed plugin for Craft CMS 3.x
+ * Instafeed plugin for Craft CMS 4.x
  *
  * Instagram feed for CraftCMS supporting multi-site configurations
  *
@@ -23,7 +23,7 @@ class UserController extends Controller
     // Protected Properties
     // =========================================================================
 
-    protected $allowAnonymous = ['index'];
+    protected array|bool|int $allowAnonymous = ['index'];
 
     // Public Methods
     // =========================================================================

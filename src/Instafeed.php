@@ -1,6 +1,6 @@
 <?php
 /**
- * Instafeed plugin for Craft CMS 3.x
+ * Instafeed plugin for Craft CMS 4.x
  *
  * Instagram feed for CraftCMS supporting multi-site configurations
  *
@@ -45,17 +45,17 @@ class Instafeed extends Plugin
     /**
      * @var string
      */
-    public $schemaVersion = '1.0.0';
+    public string $schemaVersion = '1.0.0';
 
     /**
      * @var bool
      */
-    public $hasCpSettings = true;
+    public bool $hasCpSettings = true;
 
     /**
      * @var bool
      */
-    public $hasCpSection = false;
+    public bool $hasCpSection = false;
 
     // Public Methods
     // =========================================================================
@@ -67,15 +67,15 @@ class Instafeed extends Plugin
     {
         parent::init();
         self::$plugin = $this;
-        
+
         if (Craft::$app instanceof ConsoleApplication) {
           $this->controllerNamespace = 'cloudgrayau\instafeed\console';
         }
-        
+
         Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function (Event $event) {
           $event->sender->set('instafeed', InstafeedVariable::class);
         });
-        
+
         /*Event::on(Site::class, Site::EVENT_AFTER_DELETE_SITE, function(DeleteSiteEvent $event) {
         });*/
     }
@@ -86,11 +86,11 @@ class Instafeed extends Plugin
   /**
    * @inheritdoc
    */
-  protected function createSettingsModel(){
+  protected function createSettingsModel(): ?\craft\base\Model{
     return new Settings();
   }
   
-  protected function settingsHtml(): string {
+  protected function settingsHtml(): ?string {
     return Craft::$app->view->renderTemplate(
       'instafeed/settings',
       [

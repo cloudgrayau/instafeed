@@ -1,6 +1,6 @@
 <?php
 /**
- * Instafeed plugin for Craft CMS 3.x
+ * Instafeed plugin for Craft CMS 4.x
  *
  * Instagram feed for CraftCMS supporting multi-site configurations
  *
@@ -28,7 +28,7 @@ class Settings extends Model
   /**
    * @var string
    */
-  public $cacheDuration = 3600;
+  public int $cacheDuration = 3600;
 
   // Public Methods
   // =========================================================================
@@ -36,7 +36,7 @@ class Settings extends Model
   /**
    * @inheritdoc
    */
-  public function rules()
+  public function rules(): array
   {
     return [
       ['cacheDuration', 'integer', 'min' => 0],
