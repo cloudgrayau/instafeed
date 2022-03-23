@@ -47,7 +47,7 @@ class RefreshController extends Controller
     }
     
     public function actionExpiring($timestamp='172800') {
-      echo 'here';
+      echo 'here - this is a test commit';
       return true;
     }
     
