@@ -46,11 +46,6 @@ class RefreshController extends Controller
       return $results;
     }
     
-<<<<<<< Updated upstream
-    public function actionExpiring($timestamp='172800') {
-      echo 'here - this is a test commit';
-      return true;
-=======
     public function actionExpiring($days='7') {
       $timestamp = (86400 * (int)$days);      
       $date = \craft\helpers\DateTimeHelper::toDateTime($_SERVER['REQUEST_TIME']+$timestamp);      
@@ -71,7 +66,6 @@ class RefreshController extends Controller
         }
       }
       return $results;
->>>>>>> Stashed changes
     }
     
 }
