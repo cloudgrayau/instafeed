@@ -33,7 +33,7 @@ class ExpiryController extends Controller
       foreach($sites as $site){
         $result = Instafeed::$plugin->instafeedService->getTokenExpiration('', $site);
         if (!empty($result)){
-          echo '[ ',$site->name,' ] ',$result;
+          echo $site->name,' || ',$result;
         }
       }
     }

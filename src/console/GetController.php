@@ -33,7 +33,7 @@ class GetController extends Controller
       foreach($sites as $site){
         $result = Instafeed::$plugin->instafeedService->dumpToken('', $site);
         if (!empty($result)){
-          echo '[ ',$site->name,' ] ',$result;
+          echo $site->name,' || ',$result;
         }
       }
     }

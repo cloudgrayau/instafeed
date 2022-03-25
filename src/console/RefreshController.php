@@ -39,16 +39,39 @@ class RefreshController extends Controller
       foreach($sites as $site){
         $result = Instafeed::$plugin->instafeedService->refreshToken('', $site);
         if (!empty($result)){
-          echo '[ ',$site->name,' ] ',$result;
+          echo $site->name,' || ',$result;
           $results = true;
         }
       }
       return $results;
     }
     
+<<<<<<< Updated upstream
     public function actionExpiring($timestamp='172800') {
       echo 'here - this is a test commit';
       return true;
+=======
+    public function actionExpiring($days='7') {
+      $timestamp = (86400 * (int)$days);      
+      $date = \craft\helpers\DateTimeHelper::toDateTime($_SERVER['REQUEST_TIME']+$timestamp);      
+      $results = false;
+      $query = (new \craft\db\Query())
+          ->select('siteId')
+          ->from('instafeed_tokens')
+          ->where('token_expiration <= \''.$date->format('Y-m-d H:i:s').'\'')
+          ->all();    
+      foreach($query as $site){
+        $site = \Craft::$app->getSites()->getSiteById($site['siteId']);
+        if ($site){
+          $result = Instafeed::$plugin->instafeedService->refreshToken('', $site);
+          if ($result){
+            echo $site->name,' || ',$result;
+            $results = true;
+          }
+        }
+      }
+      return $results;
+>>>>>>> Stashed changes
     }
     
 }

@@ -159,7 +159,7 @@ class InstafeedService extends Component
             } catch (GuzzleException $e) {
               return $e->getMessage();
             }
-          }, $settings_['cacheDuration']);
+          }, ($settings_['cacheDuration'] > 0) ? $settings_['cacheDuration'] : 3600);
         }
       }
       return;
@@ -190,7 +190,7 @@ class InstafeedService extends Component
             } catch (GuzzleException $e) {
               return $e->getMessage();
             }
-          }, $settings_['cacheDuration']);
+          }, ($settings_['cacheDuration'] > 0) ? $settings_['cacheDuration'] : 3600);
         }
       }
       return;
