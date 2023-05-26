@@ -1,4 +1,6 @@
+{% do view.registerAssetBundle("cloudgrayau\\utils\\assetbundles\\CloudGrayAsset") %}
 {% import "_includes/forms" as forms %}
+{% import 'cloudgrayau-utils/_macros' as macros %}
 <div id="settings">
 {{ forms.textField({
     label: "Cache duration",
@@ -8,4 +10,7 @@
     placeholder: 3600,
     type: 'number',
     min: 0,
+    warning: macros.configWarning('cacheDuration', 'instafeed')
 }) }}
+</div>
+{% include 'cloudgrayau-utils/footer' %}

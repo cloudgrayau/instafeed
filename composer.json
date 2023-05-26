@@ -13,7 +13,7 @@
         "instafeed"
     ],
     "support": {
-        "docs": "https://github.com/cloudgrayau/instafeed/blob/main/README.md",
+        "docs": "https://github.com/cloudgrayau/instafeed",
         "issues": "https://github.com/cloudgrayau/instafeed/issues"
     },
     "license": "proprietary",
@@ -25,8 +25,9 @@
     ],
     "require": {
       "craftcms/cms": "^4.0",
-      "php": "^8.0"
-      "guzzlehttp/guzzle": "^7.0"
+      "php": "^8.0",
+      "guzzlehttp/guzzle": "^7.0",
+      "cloudgrayau/utils": "^1.0.0"
     },
     "autoload": {
         "psr-4": {
@@ -38,8 +39,8 @@
         "handle": "instafeed",
         "developer": "Cloud Gray Pty Ltd",
         "developerUrl": "https://cloudgray.com.au/",
-        "documentationUrl": "https://github.com/cloudgrayau/instafeed/blob/main/README.md",
-        "changelogUrl": "https://raw.githubusercontent.com/cloudgrayau/instafeed/main/CHANGELOG.md",
+        "documentationUrl": "https://github.com/cloudgrayau/instafeed/blob/craft4/README.md",
+        "changelogUrl": "https://raw.githubusercontent.com/cloudgrayau/instafeed/craft4/CHANGELOG.md",
         "components": {
             "instafeedService": "cloudgrayau\\instafeed\\services\\InstafeedService"
         },

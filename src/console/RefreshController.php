@@ -1,13 +1,4 @@
 <?php
-/**
- * Instafeed plugin for Craft CMS 4.x
- *
- * Instagram feed for CraftCMS supporting multi-site configurations
- *
- * @link      https://cloudgray.com.au/
- * @copyright Copyright (c) 2021 Cloud Gray Pty Ltd
- */
-
 namespace cloudgrayau\instafeed\console;
 
 use Exception;
@@ -15,12 +6,12 @@ use cloudgrayau\instafeed\Instafeed;
 
 use yii\console\Controller;
 
-class RefreshController extends Controller
-{
+class RefreshController extends Controller {
+    
     // Public Methods
     // =========================================================================
 
-    public function actionIndex(String $handle='') {
+    public function actionIndex(String $handle=''): bool {
       if (empty($handle)){
         $result = Instafeed::$plugin->instafeedService->refreshToken('', \Craft::$app->getSites()->primarySite);
       } else {
@@ -33,7 +24,7 @@ class RefreshController extends Controller
       return false;
     }
     
-    public function actionAll() {
+    public function actionAll(): bool {
       $results = false;
       $sites = \Craft::$app->sites->getAllSites();
       foreach($sites as $site){
@@ -46,7 +37,7 @@ class RefreshController extends Controller
       return $results;
     }
     
-    public function actionExpiring($days='7') {
+    public function actionExpiring($days='7'): bool {
       $timestamp = (86400 * (int)$days);      
       $date = \craft\helpers\DateTimeHelper::toDateTime($_SERVER['REQUEST_TIME']+$timestamp);      
       $results = false;

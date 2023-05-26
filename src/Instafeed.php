@@ -1,17 +1,9 @@
 <?php
-/**
- * Instafeed plugin for Craft CMS 4.x
- *
- * Instagram feed for CraftCMS supporting multi-site configurations
- *
- * @link      https://cloudgray.com.au/
- * @copyright Copyright (c) 2021 Cloud Gray Pty Ltd
- */
-
 namespace cloudgrayau\instafeed;
 
 use cloudgrayau\instafeed\models\Settings;
 use cloudgrayau\instafeed\variables\InstafeedVariable;
+use cloudgrayau\utils\UtilityHelper;
 
 use Craft;
 use craft\web\twig\variables\CraftVariable;
@@ -21,71 +13,46 @@ use craft\console\Application as ConsoleApplication;
 
 use yii\base\Event;
 
-/**
- * Class Instafeed
- *
- * @author    Cloud Gray Pty Ltd
- * @package   Instafeed
- * @since     1.0.0
- *
- */
-class Instafeed extends Plugin
-{
-    // Static Properties
-    // =========================================================================
+class Instafeed extends Plugin {
 
-    /**
-     * @var Instafeed
-     */
-    public static $plugin;
-
-    // Public Properties
-    // =========================================================================
-
-    /**
-     * @var string
-     */
-    public string $schemaVersion = '1.0.0';
-
-    /**
-     * @var bool
-     */
-    public bool $hasCpSettings = true;
-
-    /**
-     * @var bool
-     */
-    public bool $hasCpSection = false;
-
-    // Public Methods
-    // =========================================================================
-
-    /**
-     * @inheritdoc
-     */
-    public function init()
-    {
-        parent::init();
-        self::$plugin = $this;
-
-        if (Craft::$app instanceof ConsoleApplication) {
-          $this->controllerNamespace = 'cloudgrayau\instafeed\console';
-        }
-
-        Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function (Event $event) {
-          $event->sender->set('instafeed', InstafeedVariable::class);
-        });
-
-        /*Event::on(Site::class, Site::EVENT_AFTER_DELETE_SITE, function(DeleteSiteEvent $event) {
-        });*/
+  public static $plugin;
+  public string $schemaVersion = '1.0.0';
+  public bool $hasCpSettings = true;
+  public bool $hasCpSection = true;
+  
+  // Public Methods
+  // =========================================================================
+  
+  public function init(): void {
+    parent::init();
+    self::$plugin = $this;
+    $this->_registerComponents();  
+    $this->_registerConsole();
+    $this->_registerVariables();
+  }
+  
+  // Private Methods
+  // =========================================================================
+  
+  private function _registerComponents(): void {
+    UtilityHelper::registerModule();
+  }
+  
+  private function _registerConsole(): void {
+    if (Craft::$app instanceof ConsoleApplication) {
+      $this->controllerNamespace = 'cloudgrayau\instafeed\console';
     }
-
+  }
+  
+  private function _registerVariables(): void {
+    Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function (Event $event) {
+      $event->sender->set('instafeed', InstafeedVariable::class);
+    });
+  }
+  
   // Protected Methods
   // =========================================================================
-
-  /**
-   * @inheritdoc
-   */
+  
   protected function createSettingsModel(): ?\craft\base\Model{
     return new Settings();
   }

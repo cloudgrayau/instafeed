@@ -1,13 +1,4 @@
 <?php
-/**
- * Instafeed plugin for Craft CMS 4.x
- *
- * Instagram feed for CraftCMS supporting multi-site configurations
- *
- * @link      https://cloudgray.com.au/
- * @copyright Copyright (c) 2021 Cloud Gray Pty Ltd
- */
-
 namespace cloudgrayau\instafeed\services;
 
 use cloudgrayau\instafeed\Instafeed;
@@ -21,8 +12,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use yii\db\Exception;
 
-class InstafeedService extends Component
-{
+class InstafeedService extends Component {
   
     private array $settings = [
       'api' => 'https://graph.instagram.com/',
@@ -35,8 +25,7 @@ class InstafeedService extends Component
     // Public Methods
     // =========================================================================
 
-    public function dumpToken(String $handle, \craft\models\Site $model=null)
-    {
+    public function dumpToken(String $handle, \craft\models\Site $model=null): mixed {
       $site = ($model) ? $model : $this->_getSite($handle);
       if ($site){
         $token = $this->_getAccessToken($site->id);
@@ -47,8 +36,7 @@ class InstafeedService extends Component
       return false;
     }
 
-    public function insertToken(String $token, String $handle, \craft\models\Site $model=null)
-    {
+    public function insertToken(String $token, String $handle, \craft\models\Site $model=null): mixed {
       $site = ($model) ? $model : $this->_getSite($handle);
       if ((!empty($token)) && ($site)){
         $this->_remove($site->id);
@@ -73,8 +61,7 @@ class InstafeedService extends Component
       }
     }
     
-    public function removeToken(String $handle, \craft\models\Site $model=null)
-    {
+    public function removeToken(String $handle, \craft\models\Site $model=null): bool {
       $site = ($model) ? $model : $this->_getSite($handle);
       if ($site){
         $this->_remove($site->id);
@@ -83,8 +70,7 @@ class InstafeedService extends Component
       return false;
     }
 
-    public function refreshToken(String $handle, \craft\models\Site $model=null)
-    {
+    public function refreshToken(String $handle, \craft\models\Site $model=null): mixed {
       $site = ($model) ? $model : $this->_getSite($handle);
       if ($site){
         $result = (new Query())
@@ -120,8 +106,7 @@ class InstafeedService extends Component
       return false;
     }
 
-    public function getTokenExpiration(String $handle, \craft\models\Site $model=null)
-    {
+    public function getTokenExpiration(String $handle, \craft\models\Site $model=null): mixed {
       $site = ($model) ? $model : $this->_getSite($handle);
       if ($site){
         $tokenage = $this->_getAccessTokenAge($site->id);
@@ -135,8 +120,7 @@ class InstafeedService extends Component
       return false;
     }
     
-    public function getUser(String $handle='')
-    {
+    public function getUser(String $handle=''): string {
       $site = $this->_getSite($handle);
       if ($site){
         $token = $this->_getAccessToken($site->id);
@@ -165,8 +149,7 @@ class InstafeedService extends Component
       return;
     }
 
-    public function getFeed($limit=10, String $handle='')
-    {
+    public function getFeed($limit=10, String $handle=''): array {
       $site = $this->_getSite($handle);
       if ($site){
         $token = $this->_getAccessToken($site->id);
@@ -188,18 +171,18 @@ class InstafeedService extends Component
               ]);
               return json_decode($response->getBody()->getContents(), true)['data'];
             } catch (GuzzleException $e) {
-              return $e->getMessage();
+              /*return $e->getMessage();*/
             }
           }, ($settings_['cacheDuration'] > 0) ? $settings_['cacheDuration'] : 3600);
         }
       }
-      return;
+      return [];
     }
     
     // Private Methods
     // =========================================================================
     
-    private function _getSite($handle){
+    private function _getSite($handle): ?\craft\models\Site {
       if (!empty($handle)){
         $site = Craft::$app->getSites()->getSiteByHandle($handle);
       } else {
@@ -208,7 +191,7 @@ class InstafeedService extends Component
       return $site;
     }
     
-    private function _refresh($token){
+    private function _refresh($token): mixed {
       $client = new Client([
         'base_uri' => $this->settings['api'],
       ]);
@@ -231,13 +214,13 @@ class InstafeedService extends Component
       }
     }
     
-    private function _remove($siteId){
+    private function _remove($siteId): void {
       \Craft::$app->db->createCommand()
         ->delete('instafeed_tokens', ['siteId' => $siteId])
         ->execute();
     }
 
-    private function _getAccessToken($siteId){
+    private function _getAccessToken($siteId): mixed {
       $token = (new Query())
         ->select(['access_token'])
         ->from('instafeed_tokens')
@@ -246,7 +229,7 @@ class InstafeedService extends Component
       return ($token['access_token'] ?? null);
     }
 
-    private function _getAccessTokenAge($siteId){
+    private function _getAccessTokenAge($siteId): mixed {
       $token = (new Query())
         ->select(['token_expiration'])
         ->from('instafeed_tokens')
@@ -254,4 +237,5 @@ class InstafeedService extends Component
         ->one();
       return ($token['token_expiration'] ?? null);
     }
+    
 }
